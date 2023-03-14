@@ -116,8 +116,11 @@ def upload_fda_data(file_dict):
 
 if __name__ == '__main__':
     while True:
+        start_time = time.time()
         client = pymongo.MongoClient('mongodb://localhost:27017')
         for zip_file in get_fda_list_new_zip_files():
             print(zip_file)
             upload_fda_data(zip_file)
+        work_time = int(time.time() - start_time)
         client.close()
+        time.sleep(abs(work_time % 14400 - 14400))
